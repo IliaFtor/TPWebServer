@@ -1,8 +1,13 @@
-package com.example.ametist;
+package com.example.ametist.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.example.ametist.UserRepository;
+import com.example.ametist.Utils.JwtUtil;
+import com.example.ametist.models.User;
+
 import java.util.ArrayList;
 
 @Service
@@ -23,12 +28,12 @@ public class AuthService {
         }
 
         User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRole(Role.USER);
+        user.setName(username);
+        user.setHashPasswoed(passwordEncoder.encode(password));
+        user.setRole(com.example.ametist.models.Role.Roles.member);
 
         userRepository.save(user);
 
-        return jwtUtil.generateToken(new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>()));
+        return jwtUtil.generateToken(new org.springframework.security.core.userdetails.User(user.getName(), user.getEmail(), new ArrayList<>()));
     }
 }

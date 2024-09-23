@@ -1,7 +1,9 @@
-package com.example.ametist;
+package com.example.ametist.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.ametist.Service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")

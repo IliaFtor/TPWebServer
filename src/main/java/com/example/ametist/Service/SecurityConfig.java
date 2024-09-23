@@ -1,4 +1,4 @@
-package com.example.ametist;
+package com.example.ametist.Service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

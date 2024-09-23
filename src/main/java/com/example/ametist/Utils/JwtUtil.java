@@ -1,4 +1,4 @@
-package com.example.ametist;
+package com.example.ametist.Utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
