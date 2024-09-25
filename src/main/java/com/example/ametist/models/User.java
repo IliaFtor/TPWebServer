@@ -41,7 +41,9 @@ public class User {
     public Integer getId() {
         return id;
     }
-
+    public void setCreatedTime (LocalDateTime Time){
+        this.createdTime = Time;
+     }
     public void setId(Integer id) {
         this.id = id;
     }
