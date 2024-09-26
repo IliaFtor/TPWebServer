@@ -15,6 +15,7 @@ import com.example.ametist.models.User;
 import jakarta.validation.Valid;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @RestController
 public class AuthController {
@@ -61,10 +62,9 @@ public class AuthController {
         newUser.setCreatedTime(LocalDateTime.now());
 
         userRepository.save(newUser);
-
-        final String jwt = jwtService.generateToken(new org.springframework.security.core.userdetails.User(newUser.getEmail(), newUser.getPasswordHash(), new ArrayList<>()));
-
+        final String jwt = jwtService.generateToken(new org.springframework.security.core.userdetails.User(newUser.getName(), newUser.getEmail(), new ArrayList<>()));;
         return jwt;
+
     }
 }
 
