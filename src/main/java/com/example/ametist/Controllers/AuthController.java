@@ -31,6 +31,9 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public String login(@RequestBody AuthRequest authRequest) throws Exception {
         try {
             authenticationManager.authenticate(
