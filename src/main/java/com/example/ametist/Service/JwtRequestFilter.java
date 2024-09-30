@@ -28,12 +28,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
+    
+        String requestURI = request.getRequestURI();
+    
+        if (requestURI.equals("/api/auth/register") || requestURI.equals("/api/auth/login")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+    
         final String authorizationHeader = request.getHeader("Authorization");
-
+    
         String username = null;
         String jwt = null;
-
+    
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             try {
@@ -44,10 +51,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 System.out.println("Invalid JWT Token");
             }
         }
-
+    
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-
+    
             if (jwtService.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -56,6 +63,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
-    }
+    }    
 }
 

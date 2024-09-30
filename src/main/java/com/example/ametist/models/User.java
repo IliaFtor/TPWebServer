@@ -28,8 +28,9 @@ public class User {
     @OneToMany(mappedBy = "author")
     private List<Environment> environments;
 
+    // Поле roles должно быть коллекцией
     @OneToMany(mappedBy = "user")
-    private Role.Roles roles;
+    private List<Role> roles;
 
     public User() {}
 
@@ -41,15 +42,25 @@ public class User {
     public Integer getId() {
         return id;
     }
-    public void setCreatedTime (LocalDateTime Time){
+
+    public void setCreatedTime(LocalDateTime Time) {
         this.createdTime = Time;
-     }
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
 
+    public String getHashPassword() {
+        return passwordHash;
+    }
+
     public String getName() {
         return username;
+    }
+
+    public void setHashPassword(String pass) {
+        this.passwordHash = pass;
     }
 
     public void setName(String name) {
@@ -60,7 +71,7 @@ public class User {
         return mail;
     }
 
-    public void setHashPasswoed(String password){
+    public void setHashPasswoed(String password) {
         this.passwordHash = password;
     }
 
@@ -68,7 +79,14 @@ public class User {
         this.mail = email;
     }
 
-    public void setRole(Role.Roles r){
-        this.roles = r;
+    // Метод для установки ролей
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    // Метод для получения ролей
+    public List<Role> getRoles() {
+        return roles;
     }
 }
+

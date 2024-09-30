@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import com.example.ametist.UserRepository;
 import com.example.ametist.Utils.JwtUtil;
 import com.example.ametist.models.User;
+import com.example.ametist.models.Role;
 
 import java.util.ArrayList;
+import java.time.*;
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -22,18 +25,23 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public String registerUser(String username, String password) {
-        if (userRepository.findByUsername(username).isPresent()) {
+    public String registerUser(String username, String password, String email) {
+        Optional<User> existingUser = userRepository.findByUsername(username);
+        if (existingUser.isPresent()) {
             throw new RuntimeException("User already exists!");
         }
 
-        User user = new User();
-        user.setName(username);
-        user.setHashPasswoed(passwordEncoder.encode(password));
-        user.setRole(com.example.ametist.models.Role.Roles.member);
+        User newUser = new User();
+        newUser.setName(username);
+        newUser.setEmail(email);
+        newUser.setHashPassword(passwordEncoder.encode(password)); 
+        newUser.setCreatedTime(LocalDateTime.now());
+        userRepository.save(newUser);
 
-        userRepository.save(user);
+        String token = jwtUtil.generateToken(new org.springframework.security.core.userdetails.User(
+            newUser.getName(), newUser.getHashPassword(), new ArrayList<>()
+        ));
 
-        return jwtUtil.generateToken(new org.springframework.security.core.userdetails.User(user.getName(), user.getEmail(), new ArrayList<>()));
+        return token;
     }
 }

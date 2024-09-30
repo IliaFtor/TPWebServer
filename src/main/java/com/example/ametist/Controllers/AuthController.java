@@ -1,23 +1,22 @@
 package com.example.ametist.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import com.example.ametist.Service.UserRepository;
+import com.example.ametist.Service.AuthService;
 import com.example.ametist.Service.JwtService;
 import com.example.ametist.Service.RegisterRequest;
-import com.example.ametist.models.User;
 
 import jakarta.validation.Valid;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 
 @RestController
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
@@ -29,12 +28,7 @@ public class AuthController {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserRepository userRepository;
-
+    @PostMapping("/login")
     public String login(@RequestBody AuthRequest authRequest) throws Exception {
         try {
             authenticationManager.authenticate(
@@ -50,22 +44,22 @@ public class AuthController {
         return jwt;
     }
     
-    public String registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-        if (userRepository.existsByMail(registerRequest.getEmail())) {
-            return "Email already in use";
+        @Autowired
+        private AuthService authService;
+
+        @PostMapping("/register") 
+        public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+            try {
+                String token = authService.registerUser(
+                    registerRequest.getUsername(),
+                    registerRequest.getPassword(),
+                    registerRequest.getEmail()
+                );
+                return ResponseEntity.ok(token);
+            } catch (RuntimeException e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
         }
-
-        User newUser = new User();
-        newUser.setName(registerRequest.getUsername());
-        newUser.setEmail(registerRequest.getEmail());
-        newUser.setHashPasswoed(passwordEncoder.encode(registerRequest.getPassword()));
-        newUser.setCreatedTime(LocalDateTime.now());
-
-        userRepository.save(newUser);
-        final String jwt = jwtService.generateToken(new org.springframework.security.core.userdetails.User(newUser.getName(), newUser.getEmail(), new ArrayList<>()));;
-        return jwt;
-
-    }
 }
 
 class AuthRequest {
