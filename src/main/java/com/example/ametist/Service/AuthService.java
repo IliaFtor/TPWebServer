@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.example.ametist.UserRepository;
 import com.example.ametist.Utils.JwtUtil;
 import com.example.ametist.models.User;
-import com.example.ametist.models.Role;
 
 import java.util.ArrayList;
 import java.time.*;

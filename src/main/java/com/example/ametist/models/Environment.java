@@ -33,6 +33,8 @@ public class Environment {
 
     @OneToMany(mappedBy = "environment")
     private List<File> files;
-
-    // Getters, Setters, Constructors
+    
+    public int getId(){
+        return id;
+    }
 }
