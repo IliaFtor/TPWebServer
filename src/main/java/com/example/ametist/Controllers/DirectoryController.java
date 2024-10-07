@@ -13,20 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-/*{
-    "files": [
-        {
-            "id": 1,
-            "name": "file1.txt",
-            "content": "some content",
-            "lastUpdate": "2023-10-03T12:34:56"
-        },
-        {
-            "id": 2,
-            "name": "file2.txt",
-            "content": "some other content",
-            "lastUpdate": "2023-10-03T13:45:56"
-        } */
+
 @RestController
 @RequestMapping("/api/directories")
 public class DirectoryController {

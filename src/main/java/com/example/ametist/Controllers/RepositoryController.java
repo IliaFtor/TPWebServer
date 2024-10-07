@@ -10,18 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-/* 
-{
-    "id": 1,
-    "author": {
-        "id": 2,
-        "username": "Ilia",
-        "email": "esl.com"
-    },
-    "name": "my",
-    "isPublic": true
-}
-*/
+
 @RestController
 @RequestMapping("/api/repositories")
 public class RepositoryController {

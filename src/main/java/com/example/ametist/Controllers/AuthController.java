@@ -4,13 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import com.example.ametist.Service.AuthService;
 import com.example.ametist.Service.JwtService;
 import com.example.ametist.Service.RegisterRequest;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 
@@ -60,6 +65,14 @@ public class AuthController {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
         }
+        @GetMapping("/check")
+    public ResponseEntity<String> checkAuth() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            return ResponseEntity.ok("User is authenticated: " + authentication.getName());
+        }
+        return ResponseEntity.status(401).body("User is not authenticated");
+    }
 }
 
 class AuthRequest {
