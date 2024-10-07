@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.ametist.UserRepository;
 import com.example.ametist.Utils.JwtUtil;
 import com.example.ametist.models.User;
+import com.example.ametist.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.time.*;

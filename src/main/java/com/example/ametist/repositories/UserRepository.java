@@ -1,4 +1,4 @@
-package com.example.ametist;
+package com.example.ametist.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

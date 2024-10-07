@@ -1,6 +1,7 @@
 package com.example.ametist.Service;
 import com.example.ametist.models.Environment;
-import com.example.ametist.EnvironmentRepository;
+import com.example.ametist.repositories.EnvironmentRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

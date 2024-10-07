@@ -1,7 +1,8 @@
 package com.example.ametist.Service;
 
-import com.example.ametist.UserRepository;
 import com.example.ametist.models.User;
+import com.example.ametist.repositories.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
