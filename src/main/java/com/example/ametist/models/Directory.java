@@ -31,14 +31,19 @@ public class Directory {
 
     // Constructors, Getters, and Setters
 
-    public Directory() {}
-
     public Directory(String name, Environment environment, Directory parent) {
         this.name = name;
         this.environment = environment;
         this.parent = parent;
     }
 
+    // Overloaded constructor without environment
+    public Directory(String name, Directory parent) {
+        this.name = name;
+        this.parent = parent;
+    }
+    public Directory() {}
+    
     public Integer getId() {
         return id;
     }
@@ -87,4 +92,5 @@ public class Directory {
     public void setSubdirectories(List<Directory> subdirectories) {
         this.subdirectories = subdirectories;
     }
+    
 }

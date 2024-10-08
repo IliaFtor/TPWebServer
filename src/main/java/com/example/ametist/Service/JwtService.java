@@ -44,12 +44,32 @@ public class JwtService {
         return createToken(claims, userDetails.getUsername());
     }
 
+    
+    public String generateRefreshToken(UserDetails userDetails) {
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 30)) // 30 дней
+                .signWith(SECRET_KEY)
+                .compact();
+    }
+
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  // 10 часов
+                .signWith(SECRET_KEY)  // Подпись с использованием безопасного ключа
+                .compact();
+    }
+
+    private String createRefreshToken(Map<String, Object> claims, String subject) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))  // 7 дней
                 .signWith(SECRET_KEY)  // Подпись с использованием безопасного ключа
                 .compact();
     }
@@ -63,3 +83,4 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
 }
+
