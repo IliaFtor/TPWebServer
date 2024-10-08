@@ -26,22 +26,17 @@ public class Environment {
     @Column(name = "is_public", nullable = false)
     private Boolean isPublic;
 
-    @OneToMany(mappedBy = "environment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Role> roles = new ArrayList<>();
-
-    @OneToMany(mappedBy = "environment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "environment")
     private List<Directory> directories = new ArrayList<>();
-
-    @OneToMany(mappedBy = "environment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<File> files = new ArrayList<>();
 
     // Default constructor
     public Environment() {
-        this.createdTime = LocalDateTime.now(); // Set current time
-        this.isPublic = false; // Default as not public
+        this.createdTime = LocalDateTime.now(); // Set current time by default
+        this.isPublic = false; // Default to not public
     }
 
-    // Getters and setters
+    // Getters and Setters
+
     public Integer getId() {
         return id;
     }
@@ -82,14 +77,6 @@ public class Environment {
         this.isPublic = isPublic;
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
     public List<Directory> getDirectories() {
         return directories;
     }
@@ -98,25 +85,58 @@ public class Environment {
         this.directories = directories;
     }
 
-    public List<File> getFiles() {
-        return files;
+    // Method to return a simplified view of the environment
+    public SimplifiedEnvironmentView getSimplifiedView() {
+        SimplifiedEnvironmentView view = new SimplifiedEnvironmentView();
+        view.setId(this.id);
+        view.setAuthorId(this.author.getId());
+        view.setAuthorName(this.author.getName());
+        view.setDirectories(this.directories);
+        return view;
     }
 
-    public void setFiles(List<File> files) {
-        this.files = files;
+    // Inner class to represent a simplified view
+    public static class SimplifiedEnvironmentView {
+        private Integer id;
+        private Integer authorId;
+        private String authorName;
+        private List<Directory> directories;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public Integer getAuthorId() {
+            return authorId;
+        }
+
+        public void setAuthorId(Integer authorId) {
+            this.authorId = authorId;
+        }
+
+        public String getAuthorName() {
+            return authorName;
+        }
+
+        public void setAuthorName(String authorName) {
+            this.authorName = authorName;
+        }
+
+        public List<Directory> getDirectories() {
+            return directories;
+        }
+
+        public void setDirectories(List<Directory> directories) {
+            this.directories = directories;
+        }
     }
 
-    // Override equals and hashCode for entity comparison
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Environment)) return false;
-        Environment that = (Environment) o;
-        return id != null && id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 31;
+    public void setRoles(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setRoles'");
     }
 }

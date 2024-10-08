@@ -34,6 +34,10 @@ public class User {
 
     public User() {}
 
+    public User(Integer id, String name){
+        this.username = name;
+        this.id = id;
+    }
     public User(String name, String email) {
         this.username = name;
         this.mail = email;
