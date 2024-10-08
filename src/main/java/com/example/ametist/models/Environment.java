@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "environments")
 public class Environment {
 
@@ -29,14 +31,13 @@ public class Environment {
     @OneToMany(mappedBy = "environment")
     private List<Directory> directories = new ArrayList<>();
 
-    // Default constructor
+    // Конструктор по умолчанию
     public Environment() {
-        this.createdTime = LocalDateTime.now(); // Set current time by default
-        this.isPublic = false; // Default to not public
+        this.createdTime = LocalDateTime.now(); // Устанавливаем текущее время по умолчанию
+        this.isPublic = false; // По умолчанию не публичный
     }
 
-    // Getters and Setters
-
+    // Геттеры и Сеттеры
     public Integer getId() {
         return id;
     }
@@ -83,60 +84,5 @@ public class Environment {
 
     public void setDirectories(List<Directory> directories) {
         this.directories = directories;
-    }
-
-    // Method to return a simplified view of the environment
-    public SimplifiedEnvironmentView getSimplifiedView() {
-        SimplifiedEnvironmentView view = new SimplifiedEnvironmentView();
-        view.setId(this.id);
-        view.setAuthorId(this.author.getId());
-        view.setAuthorName(this.author.getName());
-        view.setDirectories(this.directories);
-        return view;
-    }
-
-    // Inner class to represent a simplified view
-    public static class SimplifiedEnvironmentView {
-        private Integer id;
-        private Integer authorId;
-        private String authorName;
-        private List<Directory> directories;
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public Integer getAuthorId() {
-            return authorId;
-        }
-
-        public void setAuthorId(Integer authorId) {
-            this.authorId = authorId;
-        }
-
-        public String getAuthorName() {
-            return authorName;
-        }
-
-        public void setAuthorName(String authorName) {
-            this.authorName = authorName;
-        }
-
-        public List<Directory> getDirectories() {
-            return directories;
-        }
-
-        public void setDirectories(List<Directory> directories) {
-            this.directories = directories;
-        }
-    }
-
-    public void setRoles(Object object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setRoles'");
     }
 }

@@ -31,7 +31,7 @@ public class DirectoryService {
         }
 
         // Create the new directory
-        Directory newDirectory = new Directory(name, /* your environment here */ parentDirectory);
+        Directory newDirectory = new Directory(name, parentDirectory);
         return directoryRepository.save(newDirectory);
     }
 }
