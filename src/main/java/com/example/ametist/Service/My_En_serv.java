@@ -4,7 +4,6 @@ import com.example.ametist.models.Environment;
 import com.example.ametist.models.User;
 import com.example.ametist.repositories.EnvironmentRepository;
 import com.example.ametist.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +15,6 @@ public class My_En_serv {
     private final UserRepository userRepository;
     private final EnvironmentRepository environmentRepository;
 
-    @Autowired
     public My_En_serv(UserRepository userRepository, EnvironmentRepository environmentRepository) {
         this.userRepository = userRepository;
         this.environmentRepository = environmentRepository;

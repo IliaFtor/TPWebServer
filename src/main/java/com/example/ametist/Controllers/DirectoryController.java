@@ -1,6 +1,5 @@
 package com.example.ametist.Controllers;
 
-import com.example.ametist.Service.DirectoryService;  // Import the DirectoryService
 import com.example.ametist.models.Directory;
 import com.example.ametist.models.File;
 import com.example.ametist.repositories.DirectoryRepository;
